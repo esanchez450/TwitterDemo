@@ -1,6 +1,6 @@
-# Project 3 - *TwtterDemo*
+# Project 3 - *TwitterDemo*
 
-**TwtterDemo** is a basic twitter app to read your tweets.
+**TwitterDemo** is a basic twitter app to read your tweets.
 
 Time spent: **3** hours spent in total
 
