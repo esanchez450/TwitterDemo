@@ -12,16 +12,20 @@ class HomeTableViewController: UITableViewController {
     
     var tweetArray = [NSDictionary]()
     var numberOfTweet: Int!
-    
     let myRefreshControl = UIRefreshControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-         loadTweets()
-        
+        loadTweets()
         myRefreshControl.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
         tableView.refreshControl = myRefreshControl
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 150
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loadTweets()
     }
     
     @objc func loadTweets() {
@@ -37,7 +41,6 @@ class HomeTableViewController: UITableViewController {
             for tweet in tweets {
                 self.tweetArray.append(tweet)
             }
-            
             self.tableView.reloadData()
             self.myRefreshControl.endRefreshing()
             
@@ -91,7 +94,19 @@ class HomeTableViewController: UITableViewController {
         
         if let imageData = data {
             cell.profileImageView.image = UIImage(data: imageData)
+//            cell.profileImageView.layer.cornerRadius = cell.profileImageView.frame.height/2
+//            cell.profileImageView.clipsToBounds = true
+//            print("width:", cell.profileImageView.frame.width)
+//            print("height:", cell.profileImageView.frame.height)
+//            print(cell.usernameLabel.text as Any)
+//            print(cell.tweetContent.text)
+//            cell.profileImageView.layer.borderWidth = 1
+//            cell.profileImageView.layer.masksToBounds = true
         }
+        
+        cell.setFavorite(tweetArray[indexPath.row]["favorited"] as! Bool)
+        cell.tweetId = tweetArray[indexPath.row]["id"] as! Int
+        cell.setRetweeted(tweetArray[indexPath.row]["retweeted"] as! Bool)
         
         return cell
     }
